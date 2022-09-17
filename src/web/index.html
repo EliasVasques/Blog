@@ -12,10 +12,7 @@
             width: 80%;
             margin: auto;
         }
-        #novo-artigo {
-            margin-bottom: 20px;
-        }
-        .blogs .card {
+        #novo-blog, .blogs .card  {
             margin-bottom: 20px;
         }
     </style>
@@ -25,7 +22,7 @@
 <body>
     <h1>Blog</h1>
 
-    <button type="button" class="btn btn-success" id="novo-artigo">Novo artigo</button>
+    <button type="button" class="btn btn-success" id="novo-blog" onclick="novoBlog()">Novo blog</button>
 
     <div class="blogs"></div>
 
@@ -57,6 +54,8 @@
                 }
                 
             })
+
+        const novoBlog = () => window.location = 'http://localhost:3000/blogs/addBlog';
 
     </script>
 
