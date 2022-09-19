@@ -9,7 +9,7 @@
 
     <style></style>
 
-    <title>Blog</title>
+    <title>Ver log</title>
 </head>
 <body>
 
@@ -22,11 +22,14 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+ 
+
         const voltarHome = () => window.location = 'http://localhost:3000';
+        const irParaEditar = () => window.location = window.location.toString().replace('verBlog', 'editarBlog')
 
         // faz request a partir da url recebida
         const carregarInfoBlog = () => { 
-            const urlPegarBlog = window.location.toString().replace('/pagina', '');
+            const urlPegarBlog = window.location.toString().replace('/verBlog', '');
 
             axios.get(urlPegarBlog)
                 .then(( resposta ) => {
@@ -35,8 +38,8 @@
                     <h1>${blog.titulo}</h1>
                     <p>${blog.dataCriacao}</p>
 
-                    <button type="button" onclick="voltarHome()" class="btn btn-secondary">Todos Blogs</button>
-                    <button type="button" class="btn btn-info">Editar</button>
+                    <button type="button" onclick="voltarHome()" class="btn btn-secondary">Ver Blogs</button>
+                    <button type="button" onclick="irParaEditar()" class="btn btn-info">Editar</button>
 
                     <hr/>
 
@@ -47,7 +50,6 @@
         }
         
         carregarInfoBlog()
-
        
     </script>
 </body>

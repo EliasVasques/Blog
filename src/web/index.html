@@ -40,19 +40,22 @@
         axios.get('http://localhost:3000/blogs')
             .then( (resposta) => {
                 const blogs = resposta.data;
-                console.log(blogs)
-                for(let i=0; i<blogs.length; i++) {
-                    blogsDiv.innerHTML += `
-                    <div class="card" style="width: 100%;">
-                        <div class="card-body">
-                            <h5 class="card-title">${blogs[i].titulo}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${blogs[i].dataCriacao}</h6>
-                            <p class="card-text">${blogs[i].descricao}</p>
-                            <a href="#" onclick="lerMais('${blogs[i]._id}')" class="btn btn-primary">Ler mais</a>
-                            <a href="#" class="btn btn-info">Editar</a>
-                            <a href="#" onclick="deletar('${blogs[i]._id}')" class="btn btn-danger">Deletar</a>
-                        </div>
-                    </div>`
+
+                if(blogs.length === 0) blogsDiv.innerHTML = `<h2 style="text-align: center;">Não há blogs aqui</h2>`
+                else {
+                    for(let i=0; i<blogs.length; i++) {
+                        blogsDiv.innerHTML += `
+                        <div class="card" style="width: 100%;">
+                            <div class="card-body">
+                                <h5 class="card-title">${blogs[i].titulo}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">${blogs[i].dataCriacao}</h6>
+                                <p class="card-text">${blogs[i].descricao}</p>
+                                <a href="#" onclick="lerMais('${blogs[i]._id}')" class="btn btn-primary">Ler mais</a>
+                                <a href="#" onclick="editar('${blogs[i]._id}')" class="btn btn-info">Editar</a>
+                                <a href="#" onclick="deletar('${blogs[i]._id}')" class="btn btn-danger">Deletar</a>
+                            </div>
+                        </div>`
+                    }
                 }
                 
             })
@@ -72,8 +75,9 @@
                 })
         }
 
-        const lerMais = ( id ) =>  window.location = `http://localhost:3000/blogs/pagina/${id}`; // renderiza página blog.html
+        const lerMais = ( id ) =>  window.location = `http://localhost:3000/blogs/verBlog/${id}`; // renderiza página blog.html
 
+        const editar = ( id ) => window.location = `http://localhost:3000/blogs/editarBlog/${id}`;
 
     </script>
 

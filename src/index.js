@@ -1,5 +1,5 @@
 const express = require('express');
-const { conectarComMongo, pegarConexaoMongo } =require('./db')
+const { conectarComMongo, pegarConexaoMongo } = require('./db')
 const { ObjectId } = require('mongodb');
 
 const app = express();
@@ -67,8 +67,22 @@ app.get('/blogs/:id', (req, res) => {
     
 })
 
-app.get('/blogs/pagina/:id', (req, res) => {
-    res.sendFile(__dirname + '/web/blog.html');
+app.get('/blogs/verBlog/:id', (req, res) => {
+    res.sendFile(__dirname + '/web/verBlog.html');
+})
+
+app.get('/blogs/editarBlog/:id', (req, res) => {
+    res.sendFile(__dirname + '/web/editarBlog.html');
+})
+app.post('/blogs/editarBlog/:id', (req, res) => {   
+    db.collection('blogs')
+        .updateOne( { _id: ObjectId(req.params.id) }, { $set: req.body } )
+        .then(( blog ) => {
+            res.status(200).sendFile(__dirname + '/web/editarBlog.html');
+        })
+        .catch((erro) => {
+            res.status(500).sendFile(__dirname + '/web/editarBlog.html');
+        })
 })
 
 /*  DELETE */
