@@ -1,5 +1,6 @@
 const express = require('express');
 const { conectarComMongo, pegarConexaoMongo } =require('./db')
+const { ObjectId } = require('mongodb');
 
 const app = express();
 
@@ -39,7 +40,8 @@ app.get('/blogs/addBlog', (req, res) => {
 })
 
 app.post('/blogs/addBlog', (req, res) => {
-    const blog = req.body
+    const dataCriacao = new Date().toLocaleDateString();
+    const blog = { ...req.body, dataCriacao: dataCriacao }
     db.collection('blogs')
         .insertOne(blog)
         .then(() => {
@@ -49,3 +51,22 @@ app.post('/blogs/addBlog', (req, res) => {
             res.status(500).sendFile(__dirname + '/web/addBlog.html');
         })
 })
+
+/*  DELETE */
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    
+    if(ObjectId.isValid(id)){
+        db.collection('blogs')
+        .deleteOne( { _id: ObjectId(id) } )
+        .then( ( blog ) => {
+            res.status(200).json(blog) 
+        })
+        .catch( ( erro ) => {
+            res.status(500).json({ 'erro': 'Não foi possível deletar esse blog!'});
+        })
+    } else {
+        res.status(500).json({ 'erro': 'Id inválido!'});
+    }
+   
+})  

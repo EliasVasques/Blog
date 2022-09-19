@@ -22,6 +22,8 @@
 <body>
     <h1>Blog</h1>
 
+    <div class="alertas"></div>
+
     <button type="button" class="btn btn-success" id="novo-blog" onclick="novoBlog()">Novo blog</button>
 
     <div class="blogs"></div>
@@ -48,7 +50,7 @@
                             <p class="card-text">${blogs[i].descricao}</p>
                             <a href="#" class="btn btn-primary">Ler mais</a>
                             <a href="#" class="btn btn-info">Editar</a>
-                            <a href="#" class="btn btn-danger">Deletar</a>
+                            <a href="#" onclick="deletar('${blogs[i]._id}')" class="btn btn-danger">Deletar</a>
                         </div>
                     </div>`
                 }
@@ -56,6 +58,19 @@
             })
 
         const novoBlog = () => window.location = 'http://localhost:3000/blogs/addBlog';
+
+       const deletar = ( id ) => {
+            axios.
+                delete(`http://localhost:3000/blogs/${id}`)
+                .then(( blog ) => {
+                    window.location = 'http://localhost:3000'
+                })
+                .catch(( erro ) => {
+                    document.querySelector('.alertas').innerHTML = `<div class="alert alert-danger" role="alert">
+                        Não foi possível deletar esse blog! 
+                    </div>`
+                })
+        }
 
     </script>
 

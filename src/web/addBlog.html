@@ -28,11 +28,12 @@
               <label for="descricao">Descricao</label>
               <input type="text" name="descricao" class="form-control" id="descricao" >
             </div>
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <label for="markdown">Markdown</label>
-                <input type="text" class="form-control" id="markdown">
-              </div> -->
-            <button type="button" class="btn btn-secondary">Cancelar</button>
+                <textarea type="text" class="form-control" id="markdown" name="markdown" cols="30" rows="5"></textarea>
+            </div> 
+
+            <button type="button" class="btn btn-secondary" onclick="voltarHome()">Cancelar</button>
             <button type="submit" class="btn btn-primary">Salvar</button> <!--onclick="salvar()"-->
         </form>
    
@@ -44,7 +45,9 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        // não funcionou
+        const voltarHome = () => window.location = 'http://localhost:3000';
+        
+        /* não funcionou
         const salvar = () => {
             const titulo = document.querySelector('#titulo').value;
             const descricao = document.querySelector('#descricao').value;
@@ -56,7 +59,7 @@
                 .catch((error) => {
                     console.log(error)
                 })
-        }
+        } */
     </script>
 </body>
 </html>
