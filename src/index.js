@@ -52,21 +52,40 @@ app.post('/blogs/addBlog', (req, res) => {
         })
 })
 
+/* GET one */
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+
+    if(ObjectId.isValid(id)) {
+        db.collection('blogs')
+        .findOne({ _id: ObjectId(id) })
+        .then( (blog) => res.status(200).json(blog) )
+        .catch( (erro) => res.send(500) )
+    } else {
+        res.send(500);
+    }
+    
+})
+
+app.get('/blogs/pagina/:id', (req, res) => {
+    res.sendFile(__dirname + '/web/blog.html');
+})
+
 /*  DELETE */
 app.delete('/blogs/:id', (req, res) => {
     const id = req.params.id;
     
     if(ObjectId.isValid(id)){
         db.collection('blogs')
-        .deleteOne( { _id: ObjectId(id) } )
-        .then( ( blog ) => {
-            res.status(200).json(blog) 
-        })
-        .catch( ( erro ) => {
-            res.status(500).json({ 'erro': 'Não foi possível deletar esse blog!'});
-        })
+            .deleteOne( { _id: ObjectId(id) } )
+            .then( ( blog ) => {
+                res.status(200).json(blog) 
+            })
+            .catch( ( erro ) => {
+                res.send(500);
+            })
     } else {
-        res.status(500).json({ 'erro': 'Id inválido!'});
+        res.send(500);
     }
    
 })  

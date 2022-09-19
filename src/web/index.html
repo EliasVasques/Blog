@@ -38,8 +38,8 @@
         
         const blogsDiv = document.querySelector('.blogs');
         axios.get('http://localhost:3000/blogs')
-            .then( (result) => {
-                const blogs = result.data;
+            .then( (resposta) => {
+                const blogs = resposta.data;
                 console.log(blogs)
                 for(let i=0; i<blogs.length; i++) {
                     blogsDiv.innerHTML += `
@@ -48,7 +48,7 @@
                             <h5 class="card-title">${blogs[i].titulo}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">${blogs[i].dataCriacao}</h6>
                             <p class="card-text">${blogs[i].descricao}</p>
-                            <a href="#" class="btn btn-primary">Ler mais</a>
+                            <a href="#" onclick="lerMais('${blogs[i]._id}')" class="btn btn-primary">Ler mais</a>
                             <a href="#" class="btn btn-info">Editar</a>
                             <a href="#" onclick="deletar('${blogs[i]._id}')" class="btn btn-danger">Deletar</a>
                         </div>
@@ -59,7 +59,7 @@
 
         const novoBlog = () => window.location = 'http://localhost:3000/blogs/addBlog';
 
-       const deletar = ( id ) => {
+        const deletar = ( id ) => {
             axios.
                 delete(`http://localhost:3000/blogs/${id}`)
                 .then(( blog ) => {
@@ -71,6 +71,9 @@
                     </div>`
                 })
         }
+
+        const lerMais = ( id ) =>  window.location = `http://localhost:3000/blogs/pagina/${id}`; // renderiza página blog.html
+
 
     </script>
 
